@@ -1,17 +1,10 @@
-'use strict'
+const express = require('express')
+const path = require('path')
+const PORT = process.env.PORT || 5000
 
-var mongoose = require('mongoose');
-var app = require('./app');
-var port = process.env.PORT || 5000;
-
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://127.0.0.1:27017/biker_app', (err, res) => {
-    if (err) {
-        throwerr;
-    } else {
-        console.log('base de datos OK');
-        app.listen(port, function () {
-            console.log('Servidor del api rest');
-        });
-    }
-})
+express()
+  .use(express.static(path.join(__dirname, 'public')))
+  .set('views', path.join(__dirname, 'views'))
+  .set('view engine', 'ejs')
+  .get('/', (req, res) => res.render('pages/index'))
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
